@@ -11,7 +11,6 @@ import Foundation
 
 class OLNavigationBar: UINavigationBar {
 
-    let buttons: [UIButton] = []
     let scrollingNavBar = OLScrollingNavBar()
 
     override init(frame: CGRect) {
