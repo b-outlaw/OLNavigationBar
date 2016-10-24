@@ -8,37 +8,28 @@
 
 import UIKit
 
+protocol OLScrollingNavBarDelegate {
+    func navBarItemSelected()
+}
+
+private extension Selector {
+    static let navBarItemSelected = #selector(OLScrollingNavBar.navBarItemSelected)
+}
+
 class OLScrollingNavBar: UIScrollView {
+
+    struct Configuration {
+        var backgroundColor: UIColor = .red
+        var textColor: UIColor = .white
+        var horizontalInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 20)
+    }
+
+    var scrollingNavBarDelegate: OLScrollingNavBarDelegate?
 
     var barItems: [String] = [] {
         didSet {
             self.updateItems()
         }
-    }
-
-    func updateItems() {
-        var xPos: CGFloat = 0
-
-        for (index, item) in barItems.enumerated() {
-            // Initialize and configure button.
-            let button = UIButton(type: .custom)
-            let color: CGFloat = (CGFloat(index) * CGFloat(20)) / 255.0
-            button.setTitle(item, for: .normal)
-            button.setTitleColor(.red, for: .normal)
-            button.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 20)
-            button.backgroundColor = UIColor(red: color, green: color, blue: color, alpha: 1.0)
-
-            // Size and position button.
-            button.sizeToFit()
-            button.frame = CGRect(x: xPos, y: 0, width: button.frame.size.width, height: 44)
-            xPos += button.frame.size.width
-
-            // Add to view.
-            addSubview(button)
-        }
-
-        contentSize = CGSize(width: xPos, height: 44)
-        backgroundColor = UIColor.green
     }
 
     override var frame: CGRect {
@@ -52,10 +43,40 @@ class OLScrollingNavBar: UIScrollView {
         super.init(frame: frame)
         showsHorizontalScrollIndicator = false
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         showsHorizontalScrollIndicator = false
     }
 
+    func navBarItemSelected() {
+        scrollingNavBarDelegate?.navBarItemSelected()
+    }
+}
+
+private extension OLScrollingNavBar {
+    func updateItems() {
+        var xPos: CGFloat = 0
+
+        for (_, item) in barItems.enumerated() {
+            // Initialize and configure button.
+            let button = UIButton(type: .custom)
+            button.setTitle(item, for: .normal)
+            button.setTitleColor(Configuration().textColor, for: .normal)
+            button.contentEdgeInsets = Configuration().horizontalInsets
+            button.backgroundColor = Configuration().backgroundColor
+            button.addTarget(self, action: .navBarItemSelected, for: .touchUpInside)
+
+            // Size and position button.
+            button.sizeToFit()
+            button.frame = CGRect(x: xPos, y: 0, width: button.frame.size.width, height: 44)
+            xPos += button.frame.size.width
+
+            // Add to view.
+            addSubview(button)
+        }
+
+        contentSize = CGSize(width: xPos, height: 44)
+        backgroundColor = UIColor.green
+    }
 }
