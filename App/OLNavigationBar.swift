@@ -20,6 +20,10 @@ class OLNavigationBar: UINavigationBar {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
+        barStyle = .default
+        barTintColor = .cyan
+        self.isTranslucent = false
+
         scrollingNavBar.barItems = ["Enamel Pin", "Quinoa", "Live-Edge", "Pork belly ", "Kombucha", "mlkshk"]
         topItem?.titleView = scrollingNavBar
     }

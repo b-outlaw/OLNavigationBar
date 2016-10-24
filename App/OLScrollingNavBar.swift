@@ -19,10 +19,11 @@ private extension Selector {
 class OLScrollingNavBar: UIScrollView {
 
     struct Configuration {
-        var backgroundColor: UIColor = .red
+        var backgroundColor: UIColor = .clear
         var textColor: UIColor = .white
         var horizontalInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 20)
     }
+    var config = Configuration()
 
     var scrollingNavBarDelegate: OLScrollingNavBarDelegate?
 
@@ -31,6 +32,8 @@ class OLScrollingNavBar: UIScrollView {
             self.updateItems()
         }
     }
+
+    var buttons: [UIButton] = []
 
     override var frame: CGRect {
         didSet {
@@ -49,7 +52,9 @@ class OLScrollingNavBar: UIScrollView {
         showsHorizontalScrollIndicator = false
     }
 
-    func navBarItemSelected() {
+    func navBarItemSelected(sender: UIButton) {
+        buttons.forEach({$0.isSelected = false})
+        sender.isSelected = true
         scrollingNavBarDelegate?.navBarItemSelected()
     }
 }
@@ -60,11 +65,7 @@ private extension OLScrollingNavBar {
 
         for (_, item) in barItems.enumerated() {
             // Initialize and configure button.
-            let button = UIButton(type: .custom)
-            button.setTitle(item, for: .normal)
-            button.setTitleColor(Configuration().textColor, for: .normal)
-            button.contentEdgeInsets = Configuration().horizontalInsets
-            button.backgroundColor = Configuration().backgroundColor
+            let button = createButton(withTitle: item)
             button.addTarget(self, action: .navBarItemSelected, for: .touchUpInside)
 
             // Size and position button.
@@ -74,9 +75,21 @@ private extension OLScrollingNavBar {
 
             // Add to view.
             addSubview(button)
+            buttons.append(button)
         }
 
         contentSize = CGSize(width: xPos, height: 44)
-        backgroundColor = UIColor.green
+    }
+
+    func createButton(withTitle title: String) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(config.textColor, for: .normal)
+        button.setTitleColor(.purple, for: .highlighted)
+        button.setTitleColor(.purple, for: .selected)
+        button.contentEdgeInsets = config.horizontalInsets
+        button.backgroundColor = config.backgroundColor
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
+        return button
     }
 }
