@@ -38,7 +38,9 @@ class OLScrollingNavBar: UIScrollView {
     override var frame: CGRect {
         didSet {
             guard let size = superview?.frame.size else { return }
+            dump(superview?.frame.size.width)
             super.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            self.updateItems()
         }
     }
 
@@ -61,6 +63,9 @@ class OLScrollingNavBar: UIScrollView {
 
 private extension OLScrollingNavBar {
     func updateItems() {
+        subviews.forEach({$0.removeFromSuperview()})
+        buttons.removeAll()
+
         var xPos: CGFloat = 0
 
         for (_, item) in barItems.enumerated() {
@@ -78,6 +83,7 @@ private extension OLScrollingNavBar {
             buttons.append(button)
         }
 
+        xPos = max((superview?.frame.size.width ?? 0)+1, xPos)
         contentSize = CGSize(width: xPos, height: 44)
     }
 
