@@ -16,34 +16,56 @@ private extension Selector {
     static let navBarItemSelected = #selector(OLScrollingNavBar.navBarItemSelected)
 }
 
+private extension UIButton {
+    func configure(_ theme: OLScrollingNavBar.Theme?) {
+        guard let theme = theme else { return }
+        setTitleColor(theme.textColor, for: .normal)
+        setTitleColor(theme.textColor, for: .highlighted)
+        setTitleColor(theme.textColor, for: .selected)
+        contentEdgeInsets = theme.horizontalInsets
+        backgroundColor = theme.backgroundColor
+    }
+}
+
 class OLScrollingNavBar: UIScrollView {
 
-    struct Configuration {
-        var backgroundColor: UIColor = .clear
-        var textColor: UIColor = .white
-        var horizontalInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 20)
-    }
-    var config = Configuration()
-
-    var scrollingNavBarDelegate: OLScrollingNavBarDelegate?
-
-    var barItems: [String] = [] {
-        didSet {
-            self.updateItems()
-        }
+    /**
+        Theme related data.
+    */
+    struct Theme {
+        var backgroundColor: UIColor
+        var textColor: UIColor
+        var horizontalInsets: UIEdgeInsets
     }
 
+    var themeConfig: Theme? {
+        didSet { buttons.forEach({ $0.configure(themeConfig) }) }
+    }
+
+    /**
+        Class properties.
+     */
     var buttons: [UIButton] = []
+    var scrollingNavBarDelegate: OLScrollingNavBarDelegate?
+    var barItems: [String] = [] {
+        didSet { self.updateItems() }
+    }
 
+    /**
+        Override UINavigationBar's setting of its titleView frame.
+        http://stackoverflow.com/a/9925049
+     */
     override var frame: CGRect {
         didSet {
             guard let size = superview?.frame.size else { return }
-            dump(superview?.frame.size.width)
             super.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
             self.updateItems()
         }
     }
 
+    /**
+        Initialization methods.
+     */
     override init(frame: CGRect) {
         super.init(frame: frame)
         showsHorizontalScrollIndicator = false
@@ -67,7 +89,6 @@ private extension OLScrollingNavBar {
         buttons.removeAll()
 
         var xPos: CGFloat = 0
-
         for (_, item) in barItems.enumerated() {
             // Initialize and configure button.
             let button = createButton(withTitle: item)
@@ -90,12 +111,8 @@ private extension OLScrollingNavBar {
     func createButton(withTitle title: String) -> UIButton {
         let button = UIButton(type: .custom)
         button.setTitle(title, for: .normal)
-        button.setTitleColor(config.textColor, for: .normal)
-        button.setTitleColor(.purple, for: .highlighted)
-        button.setTitleColor(.purple, for: .selected)
-        button.contentEdgeInsets = config.horizontalInsets
-        button.backgroundColor = config.backgroundColor
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
+        button.configure(themeConfig)
         return button
     }
 }

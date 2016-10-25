@@ -25,6 +25,9 @@ class OLNavigationBar: UINavigationBar {
         self.isTranslucent = false
 
         scrollingNavBar.barItems = ["Enamel Pin", "Quinoa", "Live-Edge", "Pork belly ", "Kombucha", "mlkshk"]
+        let themeConfig = OLScrollingNavBar.Theme(backgroundColor: .clear, textColor: .black, horizontalInsets: UIEdgeInsetsMake(0, 40, 0, 40))
+        scrollingNavBar.themeConfig = themeConfig
+
         topItem?.titleView = scrollingNavBar
     }
 
