@@ -14,6 +14,7 @@
 		2C6DB3771DBE8A5C00193E12 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C6DB3701DBE8A5C00193E12 /* Info.plist */; };
 		2C6DB3781DBE8A5C00193E12 /* OLNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6DB3711DBE8A5C00193E12 /* OLNavigationBar.swift */; };
 		2C6DB3791DBE8A5C00193E12 /* OLScrollingNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6DB3721DBE8A5C00193E12 /* OLScrollingNavBar.swift */; };
+		2C6DB37B1DBECC8C00193E12 /* OLNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6DB37A1DBECC8C00193E12 /* OLNavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		2C6DB3701DBE8A5C00193E12 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C6DB3711DBE8A5C00193E12 /* OLNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLNavigationBar.swift; sourceTree = "<group>"; };
 		2C6DB3721DBE8A5C00193E12 /* OLScrollingNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLScrollingNavBar.swift; sourceTree = "<group>"; };
+		2C6DB37A1DBECC8C00193E12 /* OLNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLNavigationController.swift; sourceTree = "<group>"; };
 		2CDFDD231DB82A3100C032C9 /* OLScrollingNavBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OLScrollingNavBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -48,6 +50,7 @@
 				2C6DB3701DBE8A5C00193E12 /* Info.plist */,
 				2C6DB3711DBE8A5C00193E12 /* OLNavigationBar.swift */,
 				2C6DB3721DBE8A5C00193E12 /* OLScrollingNavBar.swift */,
+				2C6DB37A1DBECC8C00193E12 /* OLNavigationController.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			files = (
 				2C6DB3791DBE8A5C00193E12 /* OLScrollingNavBar.swift in Sources */,
 				2C6DB3781DBE8A5C00193E12 /* OLNavigationBar.swift in Sources */,
+				2C6DB37B1DBECC8C00193E12 /* OLNavigationController.swift in Sources */,
 				2C6DB3731DBE8A5C00193E12 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
