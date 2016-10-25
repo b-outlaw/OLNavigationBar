@@ -21,16 +21,16 @@ class OLNavigationBar: UINavigationBar {
         super.init(coder: aDecoder)
 
         barStyle = .default
-        barTintColor = .cyan
+        barTintColor = .blue
         self.isTranslucent = false
 
         scrollingNavBar.barItems = ["Enamel Pin", "Quinoa", "Live-Edge", "Pork belly ", "Kombucha", "mlkshk"]
         let themeConfig = OLScrollingNavBar.Theme(withDictionary: [
-            "backgroundColor" : UIColor.white,
-            "normalTextColor" : UIColor.black,
-            "activeTextColor" : UIColor.red,
+            "backgroundColor" : UIColor.clear,
+            "normalTextColor" : UIColor.white,
+            "activeTextColor" : UIColor.yellow,
             "horizontalInsets" : NSValue(uiEdgeInsets: UIEdgeInsetsMake(0, 40, 0, 40)),
-            "font" : UIFont.italicSystemFont(ofSize: 14)
+            "font" : UIFont.boldSystemFont(ofSize: 16)
         ])
         scrollingNavBar.themeConfig = themeConfig
 

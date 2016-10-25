@@ -21,6 +21,7 @@ private extension UIButton {
         guard let theme = theme else { return }
         setTitleColor(theme.normalTextColor, for: .normal)
         setTitleColor(theme.activeTextColor, for: .selected)
+        setTitleColor(theme.activeTextColor, for: .highlighted)
         titleLabel?.font = theme.font
         contentEdgeInsets = theme.horizontalInsets
         backgroundColor = theme.backgroundColor
