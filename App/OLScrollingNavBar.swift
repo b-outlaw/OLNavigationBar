@@ -19,9 +19,9 @@ private extension Selector {
 private extension UIButton {
     func configure(_ theme: OLScrollingNavBar.Theme?) {
         guard let theme = theme else { return }
-        setTitleColor(theme.textColor, for: .normal)
-        setTitleColor(theme.textColor, for: .highlighted)
-        setTitleColor(theme.textColor, for: .selected)
+        setTitleColor(theme.normalTextColor, for: .normal)
+        setTitleColor(theme.activeTextColor, for: .selected)
+        titleLabel?.font = theme.font
         contentEdgeInsets = theme.horizontalInsets
         backgroundColor = theme.backgroundColor
     }
@@ -34,8 +34,22 @@ class OLScrollingNavBar: UIScrollView {
     */
     struct Theme {
         var backgroundColor: UIColor
-        var textColor: UIColor
+        var normalTextColor: UIColor
+        var activeTextColor: UIColor
         var horizontalInsets: UIEdgeInsets
+        var font: UIFont
+
+        init(withDictionary dictionary: Dictionary<String,AnyObject>) {
+            backgroundColor = dictionary["backgroundColor"] as? UIColor ?? .clear
+            normalTextColor = dictionary["normalTextColor"] as? UIColor ?? .black
+            activeTextColor = dictionary["activeTextColor"] as? UIColor ?? .black
+            font = dictionary["font"] as? UIFont ?? UIFont.systemFont(ofSize: 12)
+            if let insets = dictionary["horizontalInsets"] as? NSValue {
+                horizontalInsets = insets.uiEdgeInsetsValue
+            } else {
+                horizontalInsets = .zero
+            }
+        }
     }
 
     var themeConfig: Theme? {
@@ -111,7 +125,6 @@ private extension OLScrollingNavBar {
     func createButton(withTitle title: String) -> UIButton {
         let button = UIButton(type: .custom)
         button.setTitle(title, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
         button.configure(themeConfig)
         return button
     }
